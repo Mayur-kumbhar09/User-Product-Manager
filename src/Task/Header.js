@@ -163,7 +163,7 @@ function Header() {
                 </Button>
               </Item>
             </Grid>
-            {showForm === true ? (
+            {showForm == true ? (
               <Grid item xs={8}>
                 <Item>
                   <AddNewUser />
