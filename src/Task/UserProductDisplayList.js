@@ -22,34 +22,111 @@ function UserProductDisplayList() {
 
     return (
         <>
-        {
-            <TableContainer component={Paper} sx={{ maxHeight: "450px" }}>
-            <Table aria-label='simple table' stickyHeader>
-                <TableHead>
-                    <TableCell>Id</TableCell>
-                    <TableCell>product_name</TableCell>
-                    <TableCell>brand</TableCell>
-                    <TableCell align='center'>price</TableCell>
-                    {/* <TableCell align='center'>Checkout</TableCell> */}
-                </TableHead>
-                <TableBody>
-                    {
-                            selectedProduct.map((product, index) => (
-                                <TableRow key={index}
-                                    sx={{ '&:last-child-td,last-child-th': { border: 0 } }}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{product.product_name}</TableCell>
-                                    <TableCell>{product.brand}</TableCell>
-                                    <TableCell align='center'>{product.price}</TableCell>
-                                    <TableCell align='center'><Button onClick={editTableCell} data-id={index}>Edit</Button></TableCell>
-                                </TableRow>
-                            ))
-                    }
-                </TableBody>
-            </Table>
-        </TableContainer>
-        }
-        </>
+  {
+    <TableContainer
+      component={Paper}
+      sx={{
+        maxHeight: "450px",
+        borderRadius: 3,
+        boxShadow: 4,
+        overflow: "hidden",
+      }}
+    >
+      <Table aria-label="simple table" stickyHeader>
+        <TableHead>
+          <TableRow>
+            <TableCell
+              sx={{
+                fontWeight: 700,
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+              }}
+            >
+              Id
+            </TableCell>
+            <TableCell
+              sx={{
+                fontWeight: 700,
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+              }}
+            >
+              Product Name
+            </TableCell>
+            <TableCell
+              sx={{
+                fontWeight: 700,
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+              }}
+            >
+              Brand
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{
+                fontWeight: 700,
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+              }}
+            >
+              Price
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{
+                fontWeight: 700,
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+              }}
+            >
+              Actions
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {selectedProduct.map((product, index) => (
+            <TableRow
+              key={index}
+              sx={{
+                "&:nth-of-type(odd)": { bgcolor: "action.hover" },
+                "&:last-child td, &:last-child th": { border: 0 },
+                transition: "background-color 0.2s ease",
+                "&:hover": { bgcolor: "primary.light", opacity: 0.9 },
+              }}
+            >
+              <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
+                {index + 1}
+              </TableCell>
+              <TableCell sx={{ fontWeight: 500 }}>
+                {product.product_name}
+              </TableCell>
+              <TableCell>{product.brand}</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 600, color: "success.main" }}>
+                ₹{product.price}
+              </TableCell>
+              <TableCell align="center">
+                <Button
+                  onClick={editTableCell}
+                  data-id={index}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Edit
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  }
+</>
     )
 }
 
