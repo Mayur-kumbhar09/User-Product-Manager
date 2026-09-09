@@ -35,7 +35,7 @@ function AddNewUser() {
         let getimgId =event.target.getAttribute('data-id');
         console.log(getimgId)
         const newImg = Images.find((img , index)=>{
-            return index == getimgId ;
+            return index === getimgId ;
 
         })
         console.log("before.........",newImg)
