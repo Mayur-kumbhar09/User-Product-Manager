@@ -5,13 +5,13 @@ import {
   Avatar,
   Paper,
   Stack,
-  Divider,
   Chip,
 } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PersonSearchOutlinedIcon from "@mui/icons-material/PersonSearchOutlined";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { MyContaxt } from "./Header";
 
 function DisplayUser() {
@@ -23,110 +23,182 @@ function DisplayUser() {
   return (
     <Box sx={{ flexGrow: 4 }}>
       <Paper
-        elevation={hasUser ? 3 : 0}
+        elevation={0}
         sx={{
-          borderRadius: 4,
-          overflow: "hidden",
+          borderRadius: 5,
           m: 2,
-          border: hasUser ? "none" : "1px dashed",
-          borderColor: "divider",
-          transition: "box-shadow 0.3s ease",
-          "&:hover": hasUser ? { boxShadow: 8 } : {},
+          p: hasUser ? 0 : 5,
+          position: "relative",
+          overflow: "hidden",
+          background: hasUser
+            ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            : "linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)",
+          border: "1px solid",
+          borderColor: hasUser ? "transparent" : "divider",
+          transition: "all 0.35s ease",
+          "&:hover": hasUser
+            ? { boxShadow: "0 20px 40px rgba(118, 75, 162, 0.35)" }
+            : {},
         }}
       >
         {!hasUser && (
-          <Stack
-            spacing={1.5}
-            alignItems="center"
-            justifyContent="center"
-            sx={{ py: 6, color: "text.disabled" }}
-          >
-            <PersonOutlineIcon sx={{ fontSize: 48 }} />
-            <Typography variant="body1" fontWeight={500}>
+          <Stack spacing={1.5} alignItems="center" sx={{ color: "text.disabled" }}>
+            <PersonSearchOutlinedIcon sx={{ fontSize: 52 }} />
+            <Typography variant="subtitle1" fontWeight={600} color="text.secondary">
               No user selected
             </Typography>
-            <Typography variant="body2">
-              Choose a user from the list to see their details
+            <Typography variant="body2" textAlign="center">
+              Pick a user from the list on the left to view their profile here
             </Typography>
           </Stack>
         )}
 
         {hasUser && (
-          <>
-            {/* Cover / banner */}
+          <Box sx={{ position: "relative", px: { xs: 3, sm: 4 }, py: 4 }}>
+            {/* Decorative background circles */}
             <Box
               sx={{
-                height: 90,
-                background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
+                position: "absolute",
+                top: -40,
+                right: -40,
+                width: 160,
+                height: 160,
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.08)",
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: -60,
+                left: -30,
+                width: 140,
+                height: 140,
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.06)",
               }}
             />
 
-            {/* Header: avatar overlapping the banner + name/city */}
-            <Box sx={{ px: 3, pb: 2, mt: -6 }}>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={2}
-                alignItems={{ xs: "center", sm: "flex-end" }}
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={3}
+              alignItems="center"
+              sx={{ position: "relative" }}
+            >
+              {/* Avatar with glowing ring */}
+              <Box
+                sx={{
+                  p: "4px",
+                  borderRadius: "50%",
+                  background:
+                    "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+                  flexShrink: 0,
+                }}
               >
                 <Avatar
                   src={selectedUser.img}
                   sx={{
-                    width: 96,
-                    height: 96,
-                    border: "4px solid",
-                    borderColor: "background.paper",
-                    boxShadow: 3,
+                    width: 100,
+                    height: 100,
+                    border: "3px solid rgba(255,255,255,0.9)",
                   }}
                 />
-                <Box
-                  sx={{
-                    pb: { sm: 1 },
-                    textAlign: { xs: "center", sm: "left" },
-                  }}
-                >
-                  <Typography variant="h5" fontWeight={700}>
+              </Box>
+
+              {/* Name, city, contact */}
+              <Stack
+                spacing={1.2}
+                sx={{ color: "#fff", width: "100%" }}
+                alignItems={{ xs: "center", sm: "flex-start" }}
+                textAlign={{ xs: "center", sm: "left" }}
+              >
+                <Stack direction="row" spacing={0.8} alignItems="center">
+                  <Typography variant="h4" fontWeight={800}>
                     {selectedUser.name}
                   </Typography>
-                  {selectedUser.city && (
-                    <Chip
-                      icon={<LocationOnOutlinedIcon sx={{ fontSize: 16 }} />}
-                      label={selectedUser.city}
-                      size="small"
-                      sx={{ mt: 0.5, fontWeight: 500 }}
-                    />
-                  )}
-                </Box>
-              </Stack>
-            </Box>
+                  <VerifiedIcon sx={{ fontSize: 22, color: "#a5f3fc" }} />
+                </Stack>
 
-            <Divider />
+                {selectedUser.city && (
+                  <Chip
+                    icon={<LocationOnOutlinedIcon sx={{ color: "#fff !important", fontSize: 16 }} />}
+                    label={selectedUser.city}
+                    size="small"
+                    sx={{
+                      bgcolor: "rgba(255,255,255,0.18)",
+                      color: "#fff",
+                      fontWeight: 600,
+                      backdropFilter: "blur(4px)",
+                    }}
+                  />
+                )}
 
-            {/* Contact details */}
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 1.5, sm: 4 }}
-              sx={{ px: 3, py: 2.5 }}
-            >
-              <Stack direction="row" spacing={1} alignItems="center">
-                <EmailOutlinedIcon fontSize="small" color="primary" />
-                <Typography variant="body2" color="text.secondary">
-                  {selectedUser.email}
-                </Typography>
-              </Stack>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <PhoneOutlinedIcon fontSize="small" color="primary" />
-                <Typography variant="body2" color="text.secondary">
-                  {selectedUser.phone_no}
-                </Typography>
-              </Stack>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <LocationOnOutlinedIcon fontSize="small" color="primary" />
-                <Typography variant="body2" color="text.secondary">
-                  {selectedUser.address}
-                </Typography>
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 1, sm: 2 }}
+                  flexWrap="wrap"
+                  useFlexGap
+                  sx={{ mt: 1.5 }}
+                >
+                  <Stack
+                    direction="row"
+                    spacing={0.8}
+                    alignItems="center"
+                    sx={{
+                      bgcolor: "rgba(255,255,255,0.12)",
+                      borderRadius: 2,
+                      px: 1.3,
+                      py: 0.6,
+                      backdropFilter: "blur(4px)",
+                    }}
+                  >
+                    <EmailOutlinedIcon sx={{ fontSize: 17 }} />
+                    <Typography variant="body2" fontWeight={500}>
+                      {selectedUser.email}
+                    </Typography>
+                  </Stack>
+
+                  <Stack
+                    direction="row"
+                    spacing={0.8}
+                    alignItems="center"
+                    sx={{
+                      bgcolor: "rgba(255,255,255,0.12)",
+                      borderRadius: 2,
+                      px: 1.3,
+                      py: 0.6,
+                      backdropFilter: "blur(4px)",
+                    }}
+                  >
+                    <PhoneOutlinedIcon sx={{ fontSize: 17 }} />
+                    <Typography variant="body2" fontWeight={500}>
+                      {selectedUser.phone_no}
+                    </Typography>
+                  </Stack>
+                </Stack>
+
+                <Stack
+                  direction="row"
+                  spacing={0.8}
+                  alignItems="center"
+                  sx={{
+                    bgcolor: "rgba(255,255,255,0.12)",
+                    borderRadius: 2,
+                    px: 1.3,
+                    py: 0.6,
+                    backdropFilter: "blur(4px)",
+                    mt: 0.5,
+                  }}
+                >
+                  <LocationOnOutlinedIcon sx={{ fontSize: 17 }} />
+                  <Typography variant="body2" fontWeight={500}>
+                    {selectedUser.address}
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
-          </>
+          </Box>
         )}
       </Paper>
     </Box>
