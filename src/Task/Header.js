@@ -30,7 +30,7 @@ function Header() {
         setShowForm(false)
         const setId = event.target.getAttribute('data-id');
         let newObj = dataArray.find((user, index) => {
-            return index == setId;
+            return index === setId;
         })
 
         setSelectedProduct(newObj.products)
@@ -39,7 +39,7 @@ function Header() {
     }
     const updateRecords = (newObj) => {
         dataArray.map((data, index) => {
-            if (index == activeUser) {
+            if (index === activeUser) {
                 data.products.push(newObj)
                 setSelectedProduct([...data.products]);
 
@@ -105,7 +105,7 @@ function Header() {
 
                                 <Grid item xs={8}>
                                     <Stack sx={{ width: '100%', height: "65px" }} spacing={2} mt={2} >
-                                        {showForm == false ? (
+                                        {showForm === false ? (
                                             <Item>
                                                 <DisplayUser />
                                             </Item>) : "select the user...."
