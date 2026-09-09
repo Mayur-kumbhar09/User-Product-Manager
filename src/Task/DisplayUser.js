@@ -26,7 +26,7 @@ function DisplayUser() {
         elevation={0}
         sx={{
           borderRadius: 5,
-          m: 2,
+          m: 0,
           p: hasUser ? 0 : 5,
           position: "relative",
           overflow: "hidden",
