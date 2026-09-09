@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Table,
   Paper,
@@ -11,28 +11,70 @@ import {
   Chip,
   Typography,
   Box,
+  Popover,
+  Stack,
+  TextField,
+  Button,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { MyContaxt } from "./Header";
 
 function UserProductDisplayList() {
-  const { selectedProduct } = useContext(MyContaxt);
-  const [getEdit, setGetEdit] = React.useState([
-    {
-      id: " ",
-      product_name: " ",
-      brand: " ",
-      price: " ",
-    },
-  ]);
+  const { selectedProduct, setSelectedProduct } = useContext(MyContaxt);
+
+  // Popover anchor element — null means closed
+  const [anchorEl, setAnchorEl] = useState(null);
+  // Index of the row currently being edited
+  const [editIndex, setEditIndex] = useState(null);
+  // Local form state for the fields being edited
+  const [editForm, setEditForm] = useState({
+    product_name: "",
+    brand: "",
+    price: "",
+  });
+
   console.log("tableDispl>>>>>>>>>>>", selectedProduct);
-  const editTableCell = (event) => {
-    let btnId = event.target.getAttribute("data-id");
-    console.log("current checkout id is: ", btnId);
-    setGetEdit([...selectedProduct, getEdit]);
+
+  // Opens the popover and pre-fills the form with the clicked row's data
+  const editTableCell = (event, index) => {
+    const product = selectedProduct[index];
+    setEditForm({
+      product_name: product.product_name,
+      brand: product.brand,
+      price: product.price,
+    });
+    setEditIndex(index);
+    setAnchorEl(event.currentTarget);
   };
-  console.log(getEdit);
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+    setEditIndex(null);
+  };
+
+  const handleFormChange = (field) => (event) => {
+    setEditForm((prev) => ({ ...prev, [field]: event.target.value }));
+  };
+
+  // Writes the edited values back into selectedProduct immutably
+  const handleSaveEdit = () => {
+    const updatedProducts = selectedProduct.map((product, index) =>
+      index === editIndex
+        ? {
+            ...product,
+            product_name: editForm.product_name,
+            brand: editForm.brand,
+            price: editForm.price,
+          }
+        : product
+    );
+
+    setSelectedProduct(updatedProducts);
+    handleClosePopover();
+  };
+
+  const isPopoverOpen = Boolean(anchorEl);
 
   return (
     <>
@@ -122,7 +164,6 @@ function UserProductDisplayList() {
                         "&:nth-of-type(odd)": { bgcolor: "grey.50" },
                         "&:last-child td, &:last-child th": { border: 0 },
                         transition: "background-color 0.2s ease",
-                        "&:hover": { bgcolor: "primary.light", opacity: 0.85 },
                       }}
                     >
                       <TableCell
@@ -147,7 +188,7 @@ function UserProductDisplayList() {
                       </TableCell>
                       <TableCell align="center">
                         <IconButton
-                          onClick={editTableCell}
+                          onClick={(event) => editTableCell(event, index)}
                           data-id={index}
                           size="small"
                           color="primary"
@@ -175,6 +216,53 @@ function UserProductDisplayList() {
               </TableBody>
             </Table>
           </TableContainer>
+
+          {/* Edit popover */}
+          <Popover
+            open={isPopoverOpen}
+            anchorEl={anchorEl}
+            onClose={handleClosePopover}
+            anchorOrigin={{ vertical: "center", horizontal: "left" }}
+            transformOrigin={{ vertical: "center", horizontal: "right" }}
+          >
+            <Stack spacing={2} sx={{ p: 2.5, width: 260 }}>
+              <Typography variant="subtitle1" fontWeight={700}>
+                Edit Product
+              </Typography>
+
+              <TextField
+                label="Product Name"
+                size="small"
+                fullWidth
+                value={editForm.product_name}
+                onChange={handleFormChange("product_name")}
+              />
+              <TextField
+                label="Brand"
+                size="small"
+                fullWidth
+                value={editForm.brand}
+                onChange={handleFormChange("brand")}
+              />
+              <TextField
+                label="Price"
+                size="small"
+                fullWidth
+                type="number"
+                value={editForm.price}
+                onChange={handleFormChange("price")}
+              />
+
+              <Stack direction="row" spacing={1} justifyContent="flex-end">
+                <Button size="small" onClick={handleClosePopover}>
+                  Cancel
+                </Button>
+                <Button size="small" variant="contained" onClick={handleSaveEdit}>
+                  Save
+                </Button>
+              </Stack>
+            </Stack>
+          </Popover>
         </Paper>
       }
     </>
