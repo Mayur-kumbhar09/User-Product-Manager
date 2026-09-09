@@ -6,7 +6,6 @@ import {
   Avatar,
   Paper,
   Stack,
-  Divider,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
