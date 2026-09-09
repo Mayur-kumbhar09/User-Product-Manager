@@ -27,7 +27,7 @@ function Header() {
   const [dataArray, setdataArray] = React.useState(userList);
   const [showForm, setShowForm] = React.useState(false);
 
-  useEffect((dataArray) => {
+  useEffect(() => {
     if (dataArray.length > 0) {
       const firstUser = dataArray[0];
       setSelectedProduct(firstUser.products);
