@@ -27,15 +27,22 @@ function Header() {
   const [dataArray, setdataArray] = React.useState(userList);
   const [showForm, setShowForm] = React.useState(false);
 
+  //   useEffect(() => {
+  //     if (dataArray.length > 0) {
+  //       const firstUser = dataArray[0];
+  //       setSelectedProduct(firstUser.products);
+  //       setSelectedUser(firstUser);
+  //       setActiveUser(0);
+  //     }
+  //   }, []);
   useEffect(() => {
-    if (dataArray.length > 0) {
+    if (dataArray.length > 0 && selectedUser.length === 0) {
       const firstUser = dataArray[0];
       setSelectedProduct(firstUser.products);
       setSelectedUser(firstUser);
       setActiveUser(0);
     }
-  }, []);
-
+  }, [dataArray, selectedUser]);
   const handleClick = (event) => {
     setShowForm(false);
     const setId = event.currentTarget.getAttribute("data-id"); // still a string
