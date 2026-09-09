@@ -28,14 +28,18 @@ function Header() {
   const [showForm, setShowForm] = React.useState(false);
   const handleClick = (event) => {
     setShowForm(false);
-    const setId = event.target.getAttribute("data-id");
+    const setId = event.currentTarget.getAttribute("data-id"); // still a string
+    const numericId = Number(setId);
+
     let newObj = dataArray.find((user, index) => {
-      return index === setId;
+      return index === numericId;
     });
+
+    if (!newObj) return; // safety net in case nothing matches
 
     setSelectedProduct(newObj.products);
     setSelectedUser(newObj);
-    setActiveUser(setId);
+    setActiveUser(numericId);
   };
   // const updateRecords = (newObj) => {
   //     dataArray.map((data, index) => {
@@ -163,7 +167,7 @@ function Header() {
                 </Button>
               </Item>
             </Grid>
-            {showForm == true ? (
+            {showForm === true ? (
               <Grid item xs={8}>
                 <Item>
                   <AddNewUser />
