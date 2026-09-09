@@ -33,7 +33,7 @@ function Header() {
   //       setSelectedProduct(firstUser.products);
   //       setSelectedUser(firstUser);
   //       setActiveUser(0);
-  //     }
+  //     } 
   //   }, []);
   useEffect(() => {
     if (dataArray.length > 0 && selectedUser.length === 0) {
