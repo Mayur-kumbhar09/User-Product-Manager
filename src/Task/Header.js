@@ -95,20 +95,50 @@ function Header() {
         <Box sx={{ flexGrow: 4 }}>
           <Grid container spacing={2} padding={3}>
             <Grid item xs={4}>
-              <Item>
-                <Typography variant="h4" sx={{ marginLeft: "10px" }}>
-                  User's
+              <Item
+                sx={{
+                  borderRadius: 3,
+                  p: 2,
+                  boxShadow: 3,
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  fontWeight={700}
+                  sx={{
+                    marginLeft: "6px",
+                    mb: 2,
+                    color: "primary.dark",
+                    borderBottom: "2px solid",
+                    borderColor: "primary.light",
+                    pb: 1,
+                  }}
+                >
+                  Users
                 </Typography>
+
                 {dataArray.map((user, index) => (
                   <Stack
-                    sx={{ width: "100%", height: "75px" }}
-                    spacing={2}
-                    mt={2}
+                    sx={{ width: "100%" }}
+                    spacing={0}
+                    mt={1.5}
                     key={index}
                     data-id={index}
                     onClick={handleClick}
                   >
-                    <Item>
+                    <Paper
+                      elevation={2}
+                      sx={{
+                        borderRadius: 2,
+                        overflow: "hidden",
+                        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                        "&:hover": {
+                          transform: "translateX(4px)",
+                          boxShadow: 6,
+                          bgcolor: "action.hover",
+                        },
+                      }}
+                    >
                       <ListItem
                         key={index}
                         component="div"
@@ -118,52 +148,77 @@ function Header() {
                       >
                         <ListItemButton
                           color="primary"
-                          varient="contained"
                           data-id={index}
                           onClick={handleClick}
+                          sx={{
+                            py: 1.2,
+                            px: 1.5,
+                            display: "flex",
+                            alignItems: "center",
+                          }}
                         >
                           <Avatar
                             sx={{
-                              width: 45,
-                              height: 45,
-                              boxShadow: 5,
-                              border: "2px solid blue",
+                              width: 48,
+                              height: 48,
+                              boxShadow: 3,
+                              border: "2px solid",
+                              borderColor: "primary.main",
+                              flexShrink: 0,
                             }}
                             src={user.img}
                           />
 
                           <Typography
-                            variant="h6"
-                            sx={{ marginLeft: "7px" }}
+                            variant="subtitle1"
+                            fontWeight={600}
+                            sx={{
+                              marginLeft: "12px",
+                              flexGrow: 1,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
                             data-id={index}
                             onClick={handleClick}
                           >
                             {user.name}
                           </Typography>
+
                           <Avatar
                             sx={{
-                              mx: "35px",
                               bgcolor: green[500],
-                              width: "20px",
-                              height: "20px",
+                              width: 26,
+                              height: 26,
+                              fontSize: "0.75rem",
+                              fontWeight: 700,
+                              boxShadow: 2,
                             }}
                           >
                             {user.products.length}
                           </Avatar>
                         </ListItemButton>
                       </ListItem>
-                    </Item>
+                    </Paper>
                   </Stack>
                 ))}
-              </Item>
-              <Item>
+
                 <Button
                   variant="contained"
-                  sx={{ m: 2 }}
+                  fullWidth
+                  sx={{
+                    mt: 3,
+                    borderRadius: 2,
+                    py: 1,
+                    fontWeight: 600,
+                    textTransform: "none",
+                    boxShadow: 3,
+                    "&:hover": { boxShadow: 6 },
+                  }}
                   color="primary"
                   onClick={() => setShowForm(true)}
                 >
-                  New-User
+                  + New User
                 </Button>
               </Item>
             </Grid>
