@@ -13,14 +13,14 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-import Person from '@mui/icons-material/Person';
-import Person2 from '@mui/icons-material/Person2';
-import Person3 from '@mui/icons-material/Person3';
-import Person4 from '@mui/icons-material/Person4';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Face from '@mui/icons-material/Face';
-
 import { MyContaxt } from './Header';
+
+import index from '../Images/index.jpg';
+import index2 from '../Images/index2.jpg';
+import index3 from '../Images/index3.jpg';
+import index4 from '../Images/index4.jpg';
+import index5 from '../Images/index5.jpg';
+import index6 from '../Images/index6.jpg';
 
 // ---- design tokens -------------------------------------------------------
 const tokens = {
@@ -113,15 +113,12 @@ const AvatarOption = styled(Box, {
     width: 52,
     height: 52,
     borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     cursor: 'pointer',
-    backgroundColor: selected ? tokens.accentSoft : tokens.surface,
-    border: `1.5px solid ${selected ? tokens.accent : tokens.line}`,
-    transition: 'border-color 120ms ease, background-color 120ms ease, transform 120ms ease',
+    padding: 2,
+    border: `2px solid ${selected ? tokens.accent : 'transparent'}`,
+    backgroundColor: selected ? tokens.accentSoft : 'transparent',
+    transition: 'border-color 120ms ease, transform 120ms ease',
     '&:hover': {
-        borderColor: tokens.accent,
         transform: 'translateY(-1px)',
     },
 }));
@@ -138,6 +135,7 @@ const CheckBadge = styled(Box)({
     alignItems: 'center',
     justifyContent: 'center',
     border: '2px solid #fff',
+    zIndex: 1,
 });
 
 const fieldSx = {
@@ -153,11 +151,11 @@ const fieldSx = {
 // ---------------------------------------------------------------------------
 
 function AddNewUser() {
-    const Icons = [Person, Person2, Person3, Person4, AccountCircleIcon, Face];
+    const Images = [index, index2, index3, index4, index5, index6];
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
     const { addNewUser } = useContext(MyContaxt);
 
-    const [selectedIcon, setSelectedIcon] = React.useState(null);
+    const [selectedImg, setSelectedImg] = React.useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(null);
 
     const watchedName = watch('name');
@@ -166,17 +164,17 @@ function AddNewUser() {
     const watchedPhone = watch('phone_no');
     const watchedAddress = watch('address');
 
-    const PreviewIcon = selectedIcon || AccountCircleIcon;
+    const previewImg = selectedImg || Images[0];
 
     const onSubmit = (formData) => {
-        addNewUser({ ...formData, icon: selectedIcon || AccountCircleIcon, products: [] });
+        addNewUser({ ...formData, img: selectedImg || Images[0], products: [] });
         reset();
-        setSelectedIcon(null);
+        setSelectedImg(null);
         setSelectedIndex(null);
     };
 
     const selectAvatar = (index) => {
-        setSelectedIcon(() => Icons[index]);
+        setSelectedImg(Images[index]);
         setSelectedIndex(index);
     };
 
@@ -250,13 +248,13 @@ function AddNewUser() {
 
                             <SectionLabel>Choose an avatar</SectionLabel>
                             <Stack direction="row" spacing={1.5}>
-                                {Icons.map((IconComponent, index) => (
+                                {Images.map((imgSrc, index) => (
                                     <AvatarOption
                                         key={index}
                                         selected={selectedIndex === index}
                                         onClick={() => selectAvatar(index)}
                                     >
-                                        <IconComponent sx={{ fontSize: 26, color: selectedIndex === index ? tokens.accent : tokens.inkSoft }} />
+                                        <Avatar src={imgSrc} sx={{ width: '100%', height: '100%' }} />
                                         {selectedIndex === index && (
                                             <CheckBadge>
                                                 <CheckIcon sx={{ fontSize: 11, color: '#fff' }} />
@@ -301,16 +299,14 @@ function AddNewUser() {
                         </PreviewHeader>
                         <PreviewBody>
                             <Avatar
+                                src={previewImg}
                                 sx={{
                                     width: 72,
                                     height: 72,
-                                    bgcolor: '#fff',
                                     border: `3px solid ${tokens.surface}`,
                                     boxShadow: '0 2px 8px rgba(16,24,32,0.15)',
                                 }}
-                            >
-                                <PreviewIcon sx={{ fontSize: 38, color: tokens.accent }} />
-                            </Avatar>
+                            />
 
                             <Typography sx={{ fontSize: 20, fontWeight: 600, color: tokens.ink, mt: 2 }}>
                                 {watchedName || 'Customer name'}

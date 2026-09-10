@@ -1,14 +1,14 @@
-import Person from '@mui/icons-material/Person';
-import Person2 from '@mui/icons-material/Person2';
-import Person3 from '@mui/icons-material/Person3';
-import Person4 from '@mui/icons-material/Person4';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Face from '@mui/icons-material/Face';
+import index from '../Images/index.jpg';
+import index2 from '../Images/index2.jpg';
+import index3 from '../Images/index3.jpg';
+import index4 from '../Images/index4.jpg';
+import index5 from '../Images/index5.jpg';
+import index6 from '../Images/index6.jpg';
 
 export const userList = [
     {
         id: 1,
-        icon: Person,
+        img: index,
         name: "Mayur Kumbhar",
         city: "Satara",
         email: "kumbharmayur0002@gmail.com",
@@ -25,7 +25,7 @@ export const userList = [
     },
     {
         id: 2,
-        icon: Person2,
+        img: index2,
         name: "Mujjamill Shaikh",
         city: "Satara",
         email: "shaikhmujjamill123@gmail.com",
@@ -42,7 +42,7 @@ export const userList = [
     },
     {
         id: 3,
-        icon: Person3,
+        img: index3,
         name: "Amey Bhosale",
         city: "Rahimatpur",
         email: "bhosaleamey4321@gmail.com",
@@ -59,7 +59,7 @@ export const userList = [
     },
     {
         id: 4,
-        icon: Person4,
+        img: index4,
         name: "Harshad Shinde",
         city: "Sangli",
         email: "harshadshinde8959@gmail.com",
@@ -76,7 +76,7 @@ export const userList = [
     },
     {
         id: 5,
-        icon: AccountCircleIcon,
+        img: index5,
         name: "Tejas Pawar",
         city: "Nashik",
         email: "pawartejas9008@gmail.com",
@@ -93,7 +93,7 @@ export const userList = [
     },
     {
         id: 6,
-        icon: Face,
+        img: index6,
         name: "Vaibhav Bidgar",
         city: "Mahswad",
         email: "bidgarvaibhav6790@gmail.com",
