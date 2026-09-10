@@ -67,7 +67,7 @@ function UserProductDisplayList() {
             brand: editForm.brand,
             price: editForm.price,
           }
-        : product
+        : product,
     );
 
     setSelectedProduct(updatedProducts);
@@ -257,7 +257,11 @@ function UserProductDisplayList() {
                 <Button size="small" onClick={handleClosePopover}>
                   Cancel
                 </Button>
-                <Button size="small" variant="contained" onClick={handleSaveEdit}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  onClick={handleSaveEdit}
+                >
                   Save
                 </Button>
               </Stack>
